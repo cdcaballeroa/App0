@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Crear evento</h3>
+    <h4 class="subtitle">Seleccione el tipo de evento y fechas (Inicio y fin):</h4>
+    <div class="box">
+        <form method="POST" action="/create_event">
+
+            <div class="select is-primary">
+                <select name="category">
+                    <option value="Conferencia">Conferencia</option>
+                    <option value="Seminario">Seminario</option>
+                    <option value="Congreso">Congreso</option>
+                    <option value="Curso">Curso</option>
+                </select>
+            </div>
+
+            <br>
+            <br>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="place" placeholder="Lugar" autofocus=""
+                    required>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="address" placeholder="Dirección"
+                    required>
+                </div>
+            </div>
+
+            <input type="date" id="start" name="startDate"
+               value="{{today}}"
+               min="{{today}}" max="2099-12-31" required>
+
+            <input type="date" id="end" name="endDate"
+               value="{{today}}"
+               min="{{today}}" max="2099-12-31" required>
+
+            <div class="field">
+                <label class="checkbox">
+                    <input type="checkbox" name="isVirtual">
+                    ¿Es virtual?
+                </label>
+            </div>
+
+
+
+            <button class="button is-block is-info is-large is-fullwidth">Agregar evento</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

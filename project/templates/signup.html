@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-4 is-offset-4">
+    <h1 class="title">Gestor de eventos</h1>
+    <h1 class="subtitle">Registrarse</h1>
+    <div class="box">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification is-danger">
+                {{ messages[0] }}. Ve a <a href="{{ url_for('auth.login') }}">iniciar sesión</a>.
+            </div>
+        {% endif %}
+        {% endwith %}
+        <form method="POST" action="/signup">
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="name" placeholder="Nombre" autofocus="" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="password" name="password" placeholder="Contraseña" required>
+                </div>
+            </div>
+
+            <button class="button is-block is-info is-large is-fullwidth">Registrarse!</button>
+        </form>
+    </div>
+</div>
+
+<a href="{{ url_for('auth.login') }}">
+    <button class="button is-link">Ir a Iniciar sesión</button>
+</a>
+{% endblock %}

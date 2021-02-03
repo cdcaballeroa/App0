@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  Descripción del Evento {{event_id}}:
+</h1>
+
+<p>Categoría: {{event.category}}
+<p>Lugar: {{event.place}}
+<p>Dirección: {{event.address}}
+<p>Fecha de inicio: {{event.startDate}}
+<p>Fecha de cierre: {{event.endDate}}
+<p>  {% if event.isVirtual %}
+  El evento es virtual.
+  {% else %}
+  El evento es presencial.
+  {% endif %}
+  </p>
+<div class="columns is-centered">
+    <div class="column is-half">
+        <button class="button is-warning modal-button"data-target="modal-edit" aria-haspopup="true">
+          Editar
+      </form>
+      <button class="button is-success">
+        <a href="{{ url_for('main.profile') }}">Volver</a>
+      </button>
+      <form method="POST"> <!--action="/event_description"-->
+        <button class="button is-danger" name="delete_id" value="{{event_id}}">
+          <input type="hidden" name="_method" value="DELETE">Eliminar
+        </button>
+      </form>
+    </div>
+</div>
+
+
+<div id="modal-edit" class="modal">
+  <form method="POST">
+    <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Editar evento (ID:{{event_id}})</p>
+          <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+          <div class="content">
+                <div class="select is-primary">
+                    <select name="category" value="{{event.category}}">
+                        <option value="Conferencia">Conferencia</option>
+                        <option value="Seminario">Seminario</option>
+                        <option value="Congreso">Congreso</option>
+                        <option value="Curso">Curso</option>
+                    </select>
+                </div>
+
+                <br>
+                <br>
+
+                <div class="field">
+                    <div class="control">
+                        <input class="input is-large" type="text" name="place" placeholder="Lugar" autofocus="" value="{{event.place}}"
+                        required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        <input class="input is-large" type="text" name="address" placeholder="Dirección" value="{{event.address}}"
+                        required>
+                    </div>
+                </div>
+
+                <input type="date" id="start" name="startDate"
+                   value="{{event.startDate}}"
+                   min="2021-01-01" max="2099-12-31" required>
+
+                <input type="date" id="end" name="endDate"
+                   value="{{event.endDate}}"
+                   min="2021-01-01" max="2099-12-31" required>
+
+                <div class="field">
+                    <label class="checkbox">
+                        <input type="checkbox" name="isVirtual" value="{{event.isVirtual}}">
+                      <h5>¿Es virtual?</h5>
+                    </label>
+                </div>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+
+            <button class="button is-success" name="edit_id" value="{{event_id}}">
+              <input type="hidden" name="_method" value="PUT">
+                Actualizar
+            </button>
+          <button class="button">Cancelar</button>
+
+        </footer>
+      </div>
+  </form>
+</div>
+{% endblock %}

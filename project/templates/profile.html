@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages(category_filter = ["error"]) %}
+{% if messages %}
+    <div class="notification is-danger">
+        {{ messages[0] }}
+    </div>
+{% endif %}
+{% endwith %}
+
+{% with messages = get_flashed_messages(category_filter = ["edited" , "created", "deleted"]) %}
+{% if messages %}
+    <div class="notification is-info is-light">
+        {{ messages[0] }}
+    </div>
+{% endif %}
+{% endwith %}
+
+{% if count == 0 %}
+<h1 class="title">
+  No tienes eventos registrados, {{name}}.
+</h1>
+{% else %}
+<h1 class="title">
+  Eventos de {{name}}:
+</h1>
+
+<form method="POST" action="/event_description">
+  <table class="table" align="center">
+    <thead>
+      <tr>
+        <th>Categoría</th>
+        <th>Lugar</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Fin</th>
+        <th>Más</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for event in user_events %}
+      <tr>
+        <td>{{event.category}}</td>
+        <td>{{event.place}}</td>
+        <td>{{event.startDate}}</td>
+        <td>{{event.endDate}}</td>
+        <td><a href="{{ url_for('edit_event.description') }}">
+          <button class="button is-primary is-rounded" value="{{event.id}}" name="id_edit">Ver, modificar o eliminar</button>
+        </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</form>
+{% endif %}
+<br>
+<a href="{{ url_for('edit_event.createevent') }}">
+  <button class="button is-link is-rounded">Crear evento</button>
+</a>
+
+<a href="{{ url_for('auth.logout') }}">
+  <button class="button is-danger">Cerrar sesión</button>
+</a>
+{% endblock %}

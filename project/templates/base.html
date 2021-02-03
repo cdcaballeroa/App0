@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestor de eventos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://bulma-calendar.onrender.com/assets/css/bulma-calendar.min.css" >
+</head>
+
+<!-- Scripts -->
+<script src="https://bulma.io/vendor/js.cookie-2.1.4.min.js"></script>
+<script src="https://bulma.io/lib/main.js?v=202101302103"></script>
+
+<body>
+    <section class="hero is-light is-fullheight">
+        <div class="hero-body">
+            <div class="container has-text-centered">
+               {% block content %}
+               {% endblock %}
+            </div>
+        </div>
+    </section>
+</body>
+</html>
