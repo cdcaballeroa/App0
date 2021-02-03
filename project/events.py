@@ -24,7 +24,6 @@ def createevent_post():
     endDate = request.form.get('endDate')
     isVirtual = True if request.form.get('isVirtual') else False
 
-    # create new user with the form data. Hash the password so plaintext version isn't saved.
     new_event = Event(email=email,
                       name=name,
                       category=category,
@@ -33,8 +32,8 @@ def createevent_post():
                       startDate=datetime.strptime(startDate, '%Y-%m-%d'),
                       endDate=datetime.strptime(endDate, '%Y-%m-%d'),
                       isVirtual=isVirtual)
-    print(new_event)
-    # add the new user to the database
+
+    # create the event on database
     if endDate >= startDate:
         usersDB.session.add(new_event)
         usersDB.session.commit()
@@ -44,7 +43,7 @@ def createevent_post():
 
     return redirect(url_for('main.profile'))
 
-
+# redirection from event_description if it's refreshed
 @events.route('/event_description')
 @login_required
 def description():
@@ -56,17 +55,14 @@ def description():
 def description_post():
     if request.form.get('_method') is None:
         see_id = request.form.get('id_edit')
-        print(see_id)
-        print("POST" + request.method)
         see_event = Event.query.filter_by(id=see_id).first()
 
         return render_template('event_description.html', event_id=see_id, event=see_event)
 
     if request.form.get('_method') == "DELETE" or request.method == "DELETE":
         delete_id = request.form.get('delete_id')
-        print(delete_id)
-        print("DELETE" + request.method)
         see_event = Event.query.filter_by(id=delete_id).first()
+
         # delete the event to the database
         usersDB.session.delete(see_event)
         usersDB.session.commit()
@@ -82,9 +78,8 @@ def description_post():
         edit_event.startDate = datetime.strptime(request.form.get('startDate'), '%Y-%m-%d')
         edit_event.endDate = datetime.strptime(request.form.get('endDate'), '%Y-%m-%d')
         edit_event.isVirtual = True if request.form.get('isVirtual') else False
-        print(edit_id)
-        print("PUT" + request.method)
-        # delete the event to the database
+
+        # update the event to the database
         if request.form.get('endDate') >= request.form.get('startDate'):
             usersDB.session.commit()
             flash('Evento actualizado.', 'edited')
